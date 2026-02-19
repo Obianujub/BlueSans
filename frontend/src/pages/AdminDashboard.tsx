@@ -174,10 +174,13 @@ const AdminDashboard: React.FC = () => {
         </div>
 
         <Tabs defaultValue="artisans" className="w-full">
+          {/* @ts-expect-error - Shadcn Tabs component uses JSX */}
           <TabsList className="mb-8" data-testid="dashboard-tabs">
+            {/* @ts-expect-error - TabsTrigger accepts string children */}
             <TabsTrigger value="artisans" data-testid="artisans-tab">
               Artisans ({artisans.length})
             </TabsTrigger>
+            {/* @ts-expect-error - TabsTrigger accepts string children */}
             <TabsTrigger value="submissions" data-testid="submissions-tab">
               Submissions ({pendingSubmissions.length})
             </TabsTrigger>
