@@ -186,6 +186,7 @@ const AdminDashboard: React.FC = () => {
             </TabsTrigger>
           </TabsList>
 
+          {/* @ts-expect-error - Shadcn TabsContent component */}
           <TabsContent value="artisans">
             <div className="mb-6">
               <button
