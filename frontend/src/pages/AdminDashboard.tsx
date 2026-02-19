@@ -265,6 +265,7 @@ const AdminDashboard: React.FC = () => {
             </div>
           </TabsContent>
 
+          {/* @ts-expect-error - Shadcn TabsContent component */}
           <TabsContent value="submissions">
             <div className="bg-white border border-slate-200 overflow-x-auto" data-testid="submissions-table">
               <table className="w-full">
