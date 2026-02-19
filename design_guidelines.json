@@ -1,0 +1,154 @@
+{
+  "design_system": {
+    "identity": {
+      "name": "Blue Mill",
+      "tone": "Industrial, Trustworthy, Precision, Clean",
+      "archetype": "Swiss Utility",
+      "theme_mode": "light"
+    },
+    "typography": {
+      "font_family": {
+        "heading": "Chivo, sans-serif",
+        "body": "Public Sans, sans-serif",
+        "mono": "JetBrains Mono, monospace"
+      },
+      "scale": {
+        "h1": "text-5xl md:text-6xl font-black tracking-tight leading-none",
+        "h2": "text-4xl md:text-5xl font-bold tracking-tight",
+        "h3": "text-2xl md:text-3xl font-bold tracking-tight",
+        "body_lg": "text-lg leading-relaxed text-slate-600",
+        "body_base": "text-base leading-relaxed text-slate-600",
+        "caption": "text-sm font-medium tracking-wide uppercase text-slate-500"
+      },
+      "rules": [
+        "Never use Inter for headings.",
+        "Headings must be Chivo.",
+        "Use tight tracking (tracking-tight) for all headings > 24px.",
+        "Use generous leading (leading-relaxed) for body text."
+      ]
+    },
+    "colors": {
+      "palette": {
+        "primary": {
+          "DEFAULT": "#0055FF",
+          "foreground": "#FFFFFF",
+          "hover": "#0044CC"
+        },
+        "secondary": {
+          "DEFAULT": "#F1F5F9",
+          "foreground": "#0F172A"
+        },
+        "background": "#FFFFFF",
+        "foreground": "#0F172A",
+        "muted": {
+          "DEFAULT": "#F8FAFC",
+          "foreground": "#64748B"
+        },
+        "accent": {
+          "DEFAULT": "#E0E7FF",
+          "foreground": "#0055FF"
+        },
+        "border": "#E2E8F0",
+        "input": "#E2E8F0"
+      },
+      "usage": {
+        "dominant": "White (#FFFFFF)",
+        "text_primary": "Slate 900 (#0F172A)",
+        "text_secondary": "Slate 600 (#475569)",
+        "brand_accent": "Electric Blue (#0055FF)",
+        "rules": [
+          "NO full screen gradients.",
+          "Use white backgrounds for 90% of the site.",
+          "Use Slate 50-100 for subtle section separation.",
+          "Primary color is for Buttons and Links ONLY."
+        ]
+      }
+    },
+    "layout": {
+      "spacing": {
+        "section_padding": "py-20 md:py-32",
+        "container_padding": "px-6 md:px-12",
+        "element_gap": "gap-8"
+      },
+      "grid_system": {
+        "modes": [
+          {
+            "name": "The Tetris Grid",
+            "usage": "Hero Sections / Feature Highlights",
+            "classes": "grid grid-cols-1 md:grid-cols-12 gap-8"
+          },
+          {
+            "name": "The Service Catalog",
+            "usage": "Artisan Listings",
+            "classes": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          }
+        ],
+        "rules": [
+          "Avoid perfect symmetry. Use col-span-2 vs col-span-1 to create rhythm.",
+          "Always use adequate gap (gap-6 or gap-8).",
+          "Containers with borders MUST have internal padding (p-6 or p-8)."
+        ]
+      },
+      "containers": {
+        "max_width": "max-w-7xl mx-auto",
+        "card_style": "bg-white border border-slate-200 rounded-none hover:shadow-xl transition-shadow duration-300"
+      }
+    },
+    "components": {
+      "buttons": {
+        "primary": "bg-primary text-white hover:bg-primary/90 rounded-none px-8 py-4 font-bold tracking-wide shadow-lg hover:shadow-xl transition-all",
+        "secondary": "bg-white text-primary border-2 border-primary hover:bg-primary/5 rounded-none px-8 py-4 font-bold tracking-wide transition-all",
+        "ghost": "text-slate-600 hover:text-primary hover:bg-slate-50 px-6 py-3 rounded-none font-medium"
+      },
+      "inputs": {
+        "default": "h-14 bg-white border-2 border-slate-200 focus:border-primary focus:ring-0 rounded-none px-4 text-lg placeholder:text-slate-400"
+      },
+      "cards": {
+        "artisan_profile": {
+          "style": "bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 group",
+          "image_aspect": "aspect-[4/3] object-cover w-full grayscale group-hover:grayscale-0 transition-all duration-500"
+        }
+      },
+      "navigation": {
+        "navbar": "fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 h-20 flex items-center justify-between px-6 md:px-12",
+        "logo_area": "w-40 h-10 bg-slate-100 flex items-center justify-center text-slate-400 text-xs tracking-widest uppercase border border-dashed border-slate-300"
+      }
+    },
+    "motion": {
+      "transitions": "transition-all duration-300 ease-out",
+      "hover_effects": "hover:-translate-y-1 hover:shadow-lg",
+      "micro_interactions": {
+        "button_click": "active:scale-95",
+        "card_hover": "group-hover:border-primary/50"
+      }
+    },
+    "assets": {
+      "image_urls": {
+        "hero_mechanic": "https://images.unsplash.com/photo-1743314777689-1bb71ae148ca?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjBtZWNoYW5pYyUyMHdvcmtlciUyMGNsb3NlJTIwdXB8ZW58MHx8fHwxNzcxNDg0ODk1fDA&ixlib=rb-4.1.0&q=85",
+        "electrician_panel": "https://images.pexels.com/photos/21812143/pexels-photo-21812143.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "plumber_hands": "https://images.pexels.com/photos/6419128/pexels-photo-6419128.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "carpenter_sanding": "https://images.unsplash.com/photo-1688240817677-d28b8e232dd4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNTl8MHwxfHNlYXJjaHwxfHxjYXJwZW50ZXIlMjBtYW4lMjBzYW5kaW5nJTIwd29vZCUyMHByb2Zlc3Npb25hbHxlbnwwfHx8fDE3NzE0ODQ5MTJ8MA&ixlib=rb-4.1.0&q=85",
+        "tools_flatlay": "https://images.pexels.com/photos/4312856/pexels-photo-4312856.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "worker_portrait_1": "https://images.unsplash.com/photo-1583182845142-55eb5b8fe184?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NjV8MHwxfHNlYXJjaHw0fHxzbWlsaW5nJTIwd29uc3RydWN0aW9uJTIwd29ya2VyJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzcxNDg0OTE0fDA&ixlib=rb-4.1.0&q=85",
+        "worker_portrait_2": "https://images.unsplash.com/photo-1672748341520-6a839e6c05bb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NjV8MHwxfHNlYXJjaHwxfHxzbWlsaW5nJTIwd29uc3RydWN0aW9uJTIwd29ya2VyJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzcxNDg0OTE0fDA&ixlib=rb-4.1.0&q=85"
+      },
+      "icons": "Use Lucide React or Phosphor Icons (Regular weight) for a technical look."
+    },
+    "universal_guidelines": [
+      "No gradients. Use flat colors or subtle noise textures.",
+      "No rounded corners on buttons or cards (or max 2px). Keep it industrial and sharp.",
+      "Use massive whitespace. Don't be afraid of empty space.",
+      "All text must be legible. WCAG AA standard.",
+      "Images should be desaturated or high-contrast to match the 'Blue Mill' aesthetic.",
+      "Do NOT use 'Inter' font. Use 'Chivo' for headings and 'Public Sans' for body."
+    ]
+  },
+  "instructions_to_main_agent": [
+    "1. Install 'lucide-react' for icons.",
+    "2. Configure Tailwind with 'Chivo' and 'Public Sans' font families.",
+    "3. Build the 'Hero' section with the 'Tetris' grid layout.",
+    "4. Create the 'Artisan Card' component with the specified hover effects.",
+    "5. Ensure the 'Admin Dashboard' is clean, dense, and uses a table layout.",
+    "6. Use the provided image URLs for placeholders."
+  ]
+}
