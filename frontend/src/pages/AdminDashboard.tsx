@@ -175,7 +175,9 @@ const AdminDashboard: React.FC = () => {
 
         <Tabs defaultValue="artisans" className="w-full">
           <TabsList className="mb-8" data-testid="dashboard-tabs">
-            <TabsTrigger value="artisans" data-testid="artisans-tab">Artisans ({artisans.length})</TabsTrigger>
+            <TabsTrigger value="artisans" data-testid="artisans-tab">
+              Artisans ({artisans.length})
+            </TabsTrigger>
             <TabsTrigger value="submissions" data-testid="submissions-tab">
               Submissions ({pendingSubmissions.length})
             </TabsTrigger>
