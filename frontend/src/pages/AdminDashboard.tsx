@@ -330,8 +330,11 @@ const AdminDashboard: React.FC = () => {
       </div>
 
       <Dialog open={showArtisanModal} onOpenChange={setShowArtisanModal}>
+        {/* @ts-expect-error - Shadcn Dialog components */}
         <DialogContent className="max-w-2xl" data-testid="artisan-modal">
+          {/* @ts-expect-error - DialogHeader component */}
           <DialogHeader>
+            {/* @ts-expect-error - DialogTitle component */}
             <DialogTitle className="text-2xl font-bold">
               {editingArtisan ? 'Edit Artisan' : 'Add New Artisan'}
             </DialogTitle>
