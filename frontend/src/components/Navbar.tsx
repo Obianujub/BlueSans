@@ -1,38 +1,46 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
 
 const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const navigate = useNavigate();
-  const isAdmin = localStorage.getItem('admin_token');
+  const isAdmin = localStorage.getItem("admin_token");
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('admin_token');
-    navigate('/admin/login');
+    localStorage.removeItem("admin_token");
+    navigate("/admin/login");
   };
 
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-white/80 backdrop-blur-md'
+        isScrolled
+          ? "bg-white/95 backdrop-blur-md shadow-sm"
+          : "bg-white/80 backdrop-blur-md"
       } border-b border-slate-100`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex items-center justify-between h-20">
-          <Link to="/" className="flex items-center" data-testid="navbar-home-link">
-            <div className="w-40 h-10 bg-slate-100 flex items-center justify-center text-slate-400 text-xs tracking-widest uppercase border border-dashed border-slate-300">
-              LOGO HERE
-            </div>
+          <Link
+            to="/"
+            className="flex items-center"
+            data-testid="navbar-home-link"
+          >
+            <img
+              src="/Bluesans.png"
+              alt="company logo"
+              className="h-8 w-auto object-contain"
+            />
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">
@@ -96,7 +104,10 @@ const Navbar: React.FC = () => {
       </div>
 
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-slate-100" data-testid="mobile-menu">
+        <div
+          className="md:hidden bg-white border-t border-slate-100"
+          data-testid="mobile-menu"
+        >
           <div className="px-6 py-4 space-y-3">
             <Link
               to="/"

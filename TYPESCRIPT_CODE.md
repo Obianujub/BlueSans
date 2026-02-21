@@ -3,6 +3,7 @@
 This document contains the complete TypeScript implementation of the Blue Mill artisan marketplace application.
 
 ## Table of Contents
+
 1. [Type Definitions](#type-definitions)
 2. [Configuration Files](#configuration-files)
 3. [Main App Component](#main-app-component)
@@ -35,6 +36,7 @@ export interface ArtisanCreate {
   location: string;
   job_type: string;
   photo_url?: string;
+  photoFile?: File | null;
 }
 
 export interface Review {
@@ -347,7 +349,7 @@ const ArtisanCard: React.FC<ArtisanCardProps> = ({ artisan }) => {
               <p className="text-sm font-medium tracking-wide uppercase text-slate-500 mt-1">{artisan.job_type}</p>
             </div>
           </div>
-          
+
           <div className="space-y-2 mb-4">
             <div className="flex items-center gap-2 text-slate-600">
               <MapPin size={16} />
@@ -390,12 +392,14 @@ All pages follow strict TypeScript typing with proper interfaces and type safety
 ## Installation Instructions
 
 1. Install TypeScript and type definitions:
+
 ```bash
 cd /app/frontend
 yarn add -D typescript @types/react @types/react-dom @types/node
 ```
 
 2. Remove jsconfig.json if it exists:
+
 ```bash
 rm jsconfig.json
 ```

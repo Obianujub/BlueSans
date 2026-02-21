@@ -17,6 +17,7 @@ export interface ArtisanCreate {
   location: string;
   job_type: string;
   photo_url?: string;
+  photoFile?: File | null;
 }
 
 export interface Review {

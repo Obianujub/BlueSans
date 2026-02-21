@@ -12,6 +12,8 @@ import uuid
 from datetime import datetime, timezone, timedelta
 import bcrypt
 import jwt
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, status, File, UploadFile, Form
+import shutil
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -95,6 +97,7 @@ class WorkerSubmission(BaseModel):
     phone: str
     location: str
     job_type: str
+    photo_url: Optional[str] = None  
     status: str = "pending"
     submitted_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
@@ -182,23 +185,63 @@ async def get_artisan(artisan_id: str):
     return artisan
 
 @api_router.post("/artisans", response_model=Artisan)
-async def create_artisan(artisan_data: ArtisanCreate, admin: dict = Depends(get_current_admin)):
-    artisan = Artisan(**artisan_data.model_dump())
+async def create_artisan(
+    name: str = Form(...),
+    phone: str = Form(...),
+    location: str = Form(...),
+    job_type: str = Form(...),
+    photo_url: Optional[str] = Form(None),
+    photo: Optional[UploadFile] = File(None),
+    admin: dict = Depends(get_current_admin)
+):
+    final_photo_url = photo_url
+    if photo:
+        upload_dir = ROOT_DIR / "uploads"
+        upload_dir.mkdir(exist_ok=True)
+        filename = f"{uuid.uuid4()}_{photo.filename}"
+        with open(upload_dir / filename, "wb") as f:
+            shutil.copyfileobj(photo.file, f)
+        final_photo_url = f"/uploads/{filename}"
+
+    artisan = Artisan(name=name, phone=phone, location=location, job_type=job_type, photo_url=final_photo_url)
     doc = artisan.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
     await db.artisans.insert_one(doc)
     return artisan
 
 @api_router.put("/artisans/{artisan_id}", response_model=Artisan)
-async def update_artisan(artisan_id: str, artisan_data: ArtisanUpdate, admin: dict = Depends(get_current_admin)):
+async def update_artisan(
+    artisan_id: str,
+    name: Optional[str] = Form(None),
+    phone: Optional[str] = Form(None),
+    location: Optional[str] = Form(None),
+    job_type: Optional[str] = Form(None),
+    photo_url: Optional[str] = Form(None),
+    photo: Optional[UploadFile] = File(None),
+    admin: dict = Depends(get_current_admin)
+):
     existing = await db.artisans.find_one({'id': artisan_id}, {'_id': 0})
     if not existing:
         raise HTTPException(status_code=404, detail="Artisan not found")
-    
-    update_data = {k: v for k, v in artisan_data.model_dump().items() if v is not None}
+
+    update_data = {}
+    if name: update_data['name'] = name
+    if phone: update_data['phone'] = phone
+    if location: update_data['location'] = location
+    if job_type: update_data['job_type'] = job_type
+    if photo:
+        upload_dir = ROOT_DIR / "uploads"
+        upload_dir.mkdir(exist_ok=True)
+        filename = f"{uuid.uuid4()}_{photo.filename}"
+        with open(upload_dir / filename, "wb") as f:
+            shutil.copyfileobj(photo.file, f)
+        update_data['photo_url'] = f"/uploads/{filename}"
+    elif photo_url:
+        update_data['photo_url'] = photo_url
+
     if update_data:
         await db.artisans.update_one({'id': artisan_id}, {'$set': update_data})
-    
+
     updated = await db.artisans.find_one({'id': artisan_id}, {'_id': 0})
     if isinstance(updated.get('created_at'), str):
         updated['created_at'] = datetime.fromisoformat(updated['created_at'])
@@ -247,8 +290,27 @@ async def get_reviews(artisan_id: str):
 # ============= SUBMISSION ROUTES =============
 
 @api_router.post("/submissions", response_model=WorkerSubmission)
-async def create_submission(submission_data: WorkerSubmissionCreate):
-    submission = WorkerSubmission(**submission_data.model_dump())
+async def create_submission(
+    name: str = Form(...),
+    phone: str = Form(...),
+    location: str = Form(...),
+    job_type: str = Form(...),
+    photo: Optional[UploadFile] = File(None)
+):
+    photo_url = None
+    if photo:
+        upload_dir = ROOT_DIR / "uploads"
+        upload_dir.mkdir(exist_ok=True)
+        filename = f"{uuid.uuid4()}_{photo.filename}"
+        file_path = upload_dir / filename
+        with open(file_path, "wb") as f:
+            shutil.copyfileobj(photo.file, f)
+        photo_url = f"/uploads/{filename}"
+
+    submission = WorkerSubmission(
+        name=name, phone=phone, location=location,
+        job_type=job_type, photo_url=photo_url
+    )
     doc = submission.model_dump()
     doc['submitted_at'] = doc['submitted_at'].isoformat()
     await db.worker_submissions.insert_one(doc)
@@ -272,7 +334,8 @@ async def approve_submission(submission_id: str, admin: dict = Depends(get_curre
         name=submission['name'],
         phone=submission['phone'],
         location=submission['location'],
-        job_type=submission['job_type']
+        job_type=submission['job_type'],
+        photo_url=submission.get('photo_url') 
     )
     doc = artisan.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
@@ -311,7 +374,7 @@ async def get_job_types():
         ]
     }
 
-app.include_router(api_router)
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -320,6 +383,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.include_router(api_router)
+from fastapi.staticfiles import StaticFiles
+uploads_dir = ROOT_DIR / "uploads"
+uploads_dir.mkdir(exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=uploads_dir), name="uploads"),
 
 logging.basicConfig(
     level=logging.INFO,
@@ -344,3 +412,6 @@ async def startup_db():
         doc['created_at'] = doc['created_at'].isoformat()
         await db.admins.insert_one(doc)
         logger.info("Default admin created: username='admin', password='admin123'")
+@app.get("/")
+async def home():
+    return {"message": "Welcome to BlueMill API! Use /api endpoints to interact."}
