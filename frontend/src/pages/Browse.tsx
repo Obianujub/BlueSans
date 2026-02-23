@@ -23,9 +23,10 @@ const Browse: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    filterArtisans();
-  }, [artisans, searchTerm, selectedJobType, locationFilter]);
-
+    fetchJobTypes();
+    fetchArtisans();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const fetchJobTypes = async () => {
     try {
       const response = await axios.get<{ job_types: string[] }>(
