@@ -32,6 +32,7 @@ const ArtisanProfile: React.FC = () => {
       fetchArtisan();
       fetchReviews();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const fetchArtisan = async () => {

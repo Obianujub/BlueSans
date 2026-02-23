@@ -47,11 +47,10 @@ const AdminDashboard: React.FC = () => {
       navigate("/admin/login");
       return;
     }
-
     fetchArtisans();
     fetchSubmissions();
     fetchJobTypes();
-  }, []);
+  }, [navigate]);
 
   const fetchArtisans = async () => {
     try {
