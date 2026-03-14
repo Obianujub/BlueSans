@@ -21,12 +21,6 @@ const Browse: React.FC = () => {
     fetchArtisans();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    fetchJobTypes();
-    fetchArtisans();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   const fetchJobTypes = async () => {
     try {
       const response = await axios.get<{ job_types: string[] }>(
@@ -44,7 +38,7 @@ const Browse: React.FC = () => {
       const response = await axios.get(`${API}/artisans`);
       const data = Array.isArray(response.data) ? response.data : [];
       setArtisans(data);
-      setFilteredArtisans(response.data);
+      setFilteredArtisans(data); // was response.data, now data
     } catch (error) {
       console.error("Error fetching artisans:", error);
     } finally {
