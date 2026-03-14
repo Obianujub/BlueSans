@@ -41,8 +41,9 @@ const Browse: React.FC = () => {
   const fetchArtisans = async () => {
     try {
       setLoading(true);
-      const response = await axios.get<Artisan[]>(`${API}/artisans`);
-      setArtisans(response.data);
+      const response = await axios.get(`${API}/artisans`);
+      const data = Array.isArray(response.data) ? response.data : [];
+      setArtisans(data);
       setFilteredArtisans(response.data);
     } catch (error) {
       console.error("Error fetching artisans:", error);
