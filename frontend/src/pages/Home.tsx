@@ -22,8 +22,9 @@ const Home: React.FC = () => {
 
   const fetchFeaturedArtisans = async () => {
     try {
-      const response = await axios.get<Artisan[]>(`${API}/artisans`);
-      setFeaturedArtisans(response.data.slice(0, 6));
+      const response = await axios.get(`${API}/artisans`);
+      const data = Array.isArray(response.data) ? response.data : [];
+      setFeaturedArtisans(data.slice(0, 6));
     } catch (error) {
       console.error("Error fetching artisans:", error);
     }
